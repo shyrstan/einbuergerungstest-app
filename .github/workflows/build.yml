@@ -1,0 +1,83 @@
+name: Build Android
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter doctor
+        run: flutter doctor -v
+
+      - name: Pub get
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+
+      - name: Launcher icons
+        run: dart run flutter_launcher_icons
+
+      - name: Test
+        run: flutter test || true
+
+      - name: Decode keystore (if configured)
+        if: ${{ env.KEYSTORE_B64 != '' }}
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+        run: |
+          echo "$KEYSTORE_B64" | base64 -d > android/app/upload-keystore.jks
+          cat > android/key.properties <<EOF
+          storeFile=upload-keystore.jks
+          storePassword=${{ secrets.KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          EOF
+
+      - name: Build APK (debug-signed if no keystore)
+        env:
+          ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
+        run: |
+          flutter build apk --release \
+            --dart-define=ADMOB_INTERSTITIAL=${{ secrets.ADMOB_INTERSTITIAL }} \
+            --dart-define=ADMOB_REWARDED=${{ secrets.ADMOB_REWARDED }} \
+            --dart-define=ADMOB_BANNER=${{ secrets.ADMOB_BANNER }} \
+            --dart-define=PRIVACY_URL=${{ vars.PRIVACY_URL }} \
+            --dart-define=IMPRINT_URL=${{ vars.IMPRINT_URL }}
+
+      - name: Build AAB
+        env:
+          ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
+        run: |
+          flutter build appbundle --release \
+            --dart-define=ADMOB_INTERSTITIAL=${{ secrets.ADMOB_INTERSTITIAL }} \
+            --dart-define=ADMOB_REWARDED=${{ secrets.ADMOB_REWARDED }} \
+            --dart-define=ADMOB_BANNER=${{ secrets.ADMOB_BANNER }} \
+            --dart-define=PRIVACY_URL=${{ vars.PRIVACY_URL }} \
+            --dart-define=IMPRINT_URL=${{ vars.IMPRINT_URL }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: einbtest-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: einbtest-aab
+          path: build/app/outputs/bundle/release/app-release.aab

@@ -1,0 +1,3 @@
+-keep class com.google.android.gms.** { *; }
+-keep class com.android.vending.billing.** { *; }
+-dontwarn com.google.android.gms.**

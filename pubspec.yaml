@@ -1,0 +1,40 @@
+name: einbtest
+description: Einbürgerungstest 2026 – alle offiziellen Fragen, Prüfungssimulation, Erklärungen in 6 Sprachen.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  provider: ^6.1.2
+  shared_preferences: ^2.3.2
+  google_mobile_ads: ^5.2.0
+  in_app_purchase: ^3.2.0
+  url_launcher: ^6.3.0
+  package_info_plus: ^8.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.13.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/data/questions.json
+    - assets/data/strings.json
+    - assets/images/
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#1F3A5F"
+  adaptive_icon_foreground: "assets/icon/icon_fg.png"
