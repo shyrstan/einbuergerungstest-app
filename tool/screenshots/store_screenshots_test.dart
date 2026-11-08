@@ -91,7 +91,7 @@ const taglines = <String, String>{
   'de': 'Alle 310 Fragen · Prüfungssimulation · Erklärungen in 6 Sprachen',
   'en': 'All 310 questions · Exam simulation · Explanations in 6 languages',
   'tr': '310 sorunun tamamı · Sınav simülasyonu · 6 dilde açıklama',
-  'ar': 'جميع الأسئلة الـ310 · محاكاة الامتحان · شروحات بـ6 لغات',
+  'ar': 'جميع الأسئلة الـ310 · محاكاة الامتحان · شروحات بـ6 لغات',
   'ru': 'Все 310 вопросов · Симуляция экзамена · Объяснения на 6 языках',
   'uk': 'Усі 310 запитань · Симуляція іспиту · Пояснення 6 мовами',
 };
