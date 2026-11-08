@@ -582,7 +582,13 @@ void main() {
         // 3. Situational question
         final q2 = byId('S055');
         await shot(3, PracticeScreen(title: s.t('menu_situations'), pool: poolStartingWith(q2, exam.specialPool(questions, store.segment)), smart: false, shuffle: false),
-            act: () => answerAndReveal(q2));
+            act: () async {
+              // Answer selected but not checked yet: the full question, the "unofficial example"
+              // badge and all four options stay visible in every language.
+              await precacheImages(tester);
+              await tester.tap(optionText(q2.options[q2.correct]));
+              await tester.pump(const Duration(milliseconds: 600));
+            });
       }
 
       // 4. Exam simulation in progress (question 8)
