@@ -546,6 +546,21 @@ void main() {
         await tester.pump(const Duration(milliseconds: 600));
       }
 
+      // Scrolls just enough to show the explanation, but never past the top padding,
+      // so the first line of the question is not cut off (translations make cards taller).
+      Future<void> answerAndReveal(Question q) async {
+        await precacheImages(tester);
+        await tester.tap(optionText(q.options[q.correct]));
+        await tester.pump(const Duration(milliseconds: 300));
+        await tester.tap(find.text(s.t('check')));
+        await tester.pump(const Duration(milliseconds: 300));
+        await tester.pump(const Duration(milliseconds: 300));
+        final pos = tester.state<ScrollableState>(find.byType(Scrollable).first).position;
+        pos.jumpTo(min(pos.maxScrollExtent, 12.0));
+        await tester.pump(const Duration(milliseconds: 600));
+        await tester.pump(const Duration(milliseconds: 600));
+      }
+
       List<Question> poolStartingWith(Question q, Iterable<Question> rest) =>
           [q, ...rest.where((x) => x.id != q.id).take(19)];
 
@@ -560,13 +575,14 @@ void main() {
             act: () => answerAndScroll(q2, -150));
       } else {
         // 2. Official question answered, explanation (and translation) visible
-        final q1 = byId('F031');
+        // Short items so question, answers and both explanations fit on one screen in every language.
+        final q1 = byId('F377');
         await shot(2, PracticeScreen(title: s.t('topic_principes'), pool: poolStartingWith(q1, exam.byTopic(questions, 'principes', store.segment)), smart: false, shuffle: false),
-            act: () => answerAndScroll(q1, -120));
+            act: () => answerAndReveal(q1));
         // 3. Situational question
-        final q2 = byId('S002');
+        final q2 = byId('S051');
         await shot(3, PracticeScreen(title: s.t('menu_situations'), pool: poolStartingWith(q2, exam.specialPool(questions, store.segment)), smart: false, shuffle: false),
-            act: () => answerAndScroll(q2, -120));
+            act: () => answerAndReveal(q2));
       }
 
       // 4. Exam simulation in progress (question 8)
