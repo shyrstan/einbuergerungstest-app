@@ -41,7 +41,7 @@ class EinbApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AppState>();
-    final seed = const Color(0xFF1F3A5F);
+    const seed = Color(0xFF1F3A5F);
     return MaterialApp(
       title: 'Einbürgerungstest 2026',
       debugShowCheckedModeBanner: false,

@@ -26,7 +26,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
   int _i = 0;
   int? _selected;
   bool _revealed = false;
-  int _sessionRight = 0;
   bool _unlockedTranslation = false; // per-question reward
 
   @override
@@ -43,7 +42,6 @@ class _PracticeScreenState extends State<PracticeScreen> {
     if (_selected == null) return;
     final st = context.read<AppState>();
     final ok = _selected == _q.correct;
-    if (ok) _sessionRight++;
     setState(() => _revealed = true);
     await st.recordAnswer(_q, ok);
     if (st.answeredCount % 10 == 0) {
