@@ -4,15 +4,15 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../l10n/strings.dart';
-import '../models/question.dart';
+import '../exam/exam_config.dart';
 import '../services/iap.dart';
 import '../services/ads.dart';
 import '../services/progress.dart';
 
 const _privacyEnv = String.fromEnvironment('PRIVACY_URL');
-String get kPrivacyUrl => _privacyEnv.isEmpty ? 'https://shyrstan.github.io/einbtest-legal/privacy.html' : _privacyEnv;
+String get kPrivacyUrl => _privacyEnv.isEmpty ? ExamConfig.current.defaultPrivacyUrl : _privacyEnv;
 const _imprintEnv = String.fromEnvironment('IMPRINT_URL');
-String get kImprintUrl => _imprintEnv.isEmpty ? 'https://shyrstan.github.io/einbtest-legal/imprint.html' : _imprintEnv;
+String get kImprintUrl => _imprintEnv.isEmpty ? ExamConfig.current.defaultImprintUrl : _imprintEnv;
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -65,7 +65,7 @@ class SettingsScreen extends StatelessWidget {
               trailing: DropdownButton<String>(
                 value: st.land,
                 underline: const SizedBox.shrink(),
-                items: kLaender.map((l) => DropdownMenuItem(value: l.code, child: Text(l.nameDe))).toList(),
+                items: st.exam.segments.map((l) => DropdownMenuItem(value: l.code, child: Text(l.name(s)))).toList(),
                 onChanged: (v) => v == null ? null : st.setLand(v),
               ),
             ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../l10n/strings.dart';
-import '../models/question.dart';
 import '../services/progress.dart';
 import '../widgets/banner_box.dart';
 import 'exam.dart';
@@ -21,7 +20,7 @@ class HomeScreen extends StatelessWidget {
     final total = st.relevant.length;
     final mastered = st.masteredCount();
     final ratio = total == 0 ? 0.0 : mastered / total;
-    final landName = kLaender.firstWhere((l) => l.code == st.land, orElse: () => const LandInfo('', '')).nameDe;
+    final specialTitle = st.exam.specialTitle(s, st.land);
     final wrong = st.wrongOnes.length;
 
     return Directionality(
@@ -91,13 +90,13 @@ class HomeScreen extends StatelessWidget {
                       builder: (_) => PracticeScreen(title: s.t('menu_all'), pool: st.general, smart: true))),
             ),
             _MenuTile(
-              icon: Icons.map_outlined,
-              title: s.t('menu_land', {'land': landName}),
+              icon: st.exam.id == 'de' ? Icons.map_outlined : Icons.forum_outlined,
+              title: specialTitle,
               subtitle: s.t('questions_count', {'n': st.landQuestions.length}),
               onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => PracticeScreen(title: landName, pool: st.landQuestions, smart: false))),
+                      builder: (_) => PracticeScreen(title: specialTitle, pool: st.landQuestions, smart: st.landQuestions.length > 20))),
             ),
             _MenuTile(
               icon: Icons.timer_outlined,

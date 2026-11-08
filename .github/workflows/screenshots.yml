@@ -7,6 +7,7 @@ on:
     paths:
       - "tool/screenshots/**"
       - "lib/**"
+      - "assets/**"
       - ".github/workflows/screenshots.yml"
 
 permissions:
@@ -27,7 +28,7 @@ jobs:
       - name: Pub get
         run: flutter pub get
 
-      - name: Collect fonts (Roboto + Noto Sans Arabic)
+      - name: Collect fonts (Roboto + Noto Sans Arabic + Noto Sans SC)
         run: |
           set -x
           mkdir -p tool/screenshots/fonts
@@ -46,12 +47,19 @@ jobs:
           fi
           curl -fsSL -o tool/screenshots/fonts/NotoSansArabic.ttf \
             "https://github.com/google/fonts/raw/main/ofl/notosansarabic/NotoSansArabic%5Bwdth%2Cwght%5D.ttf" || true
+          curl -fsSL -o tool/screenshots/fonts/NotoSansSC.ttf \
+            "https://github.com/google/fonts/raw/main/ofl/notosanssc/NotoSansSC%5Bwght%5D.ttf" || true
           ls -la tool/screenshots/fonts
 
-      - name: Render screenshots
-        run: flutter test tool/screenshots/store_screenshots_test.dart --reporter expanded
+      - name: Render screenshots (Germany)
+        run: flutter test --dart-define=EXAM=de tool/screenshots/store_screenshots_test.dart --reporter expanded
+
+      - name: Render screenshots (France)
+        if: always()
+        run: flutter test --dart-define=EXAM=fr tool/screenshots/store_screenshots_test.dart --reporter expanded
 
       - name: Publish to store-assets branch
+        if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

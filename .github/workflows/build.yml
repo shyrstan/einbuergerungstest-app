@@ -9,6 +9,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        flavor: [de, fr]
+    env:
+      # Per-app AdMob IDs; Google's test IDs are used when a secret is missing.
+      ADMOB_APP_ID_DE: ${{ secrets.ADMOB_APP_ID }}
+      ADMOB_APP_ID_FR: ${{ secrets.ADMOB_APP_ID_FR }}
+      AD_INTERSTITIAL: ${{ matrix.flavor == 'fr' && secrets.ADMOB_INTERSTITIAL_FR || secrets.ADMOB_INTERSTITIAL }}
+      AD_REWARDED: ${{ matrix.flavor == 'fr' && secrets.ADMOB_REWARDED_FR || secrets.ADMOB_REWARDED }}
+      AD_BANNER: ${{ matrix.flavor == 'fr' && secrets.ADMOB_BANNER_FR || secrets.ADMOB_BANNER }}
     steps:
       - uses: actions/checkout@v4
 
@@ -51,33 +62,27 @@ jobs:
           EOF
 
       - name: Build APK (debug-signed if no keystore)
-        env:
-          ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
         run: |
-          flutter build apk --release \
-            --dart-define=ADMOB_INTERSTITIAL=${{ secrets.ADMOB_INTERSTITIAL }} \
-            --dart-define=ADMOB_REWARDED=${{ secrets.ADMOB_REWARDED }} \
-            --dart-define=ADMOB_BANNER=${{ secrets.ADMOB_BANNER }} \
-            --dart-define=PRIVACY_URL=${{ vars.PRIVACY_URL }} \
-            --dart-define=IMPRINT_URL=${{ vars.IMPRINT_URL }}
+          flutter build apk --release --flavor ${{ matrix.flavor }} \
+            --dart-define=EXAM=${{ matrix.flavor }} \
+            --dart-define=ADMOB_INTERSTITIAL=$AD_INTERSTITIAL \
+            --dart-define=ADMOB_REWARDED=$AD_REWARDED \
+            --dart-define=ADMOB_BANNER=$AD_BANNER
 
       - name: Build AAB
-        env:
-          ADMOB_APP_ID: ${{ secrets.ADMOB_APP_ID }}
         run: |
-          flutter build appbundle --release \
-            --dart-define=ADMOB_INTERSTITIAL=${{ secrets.ADMOB_INTERSTITIAL }} \
-            --dart-define=ADMOB_REWARDED=${{ secrets.ADMOB_REWARDED }} \
-            --dart-define=ADMOB_BANNER=${{ secrets.ADMOB_BANNER }} \
-            --dart-define=PRIVACY_URL=${{ vars.PRIVACY_URL }} \
-            --dart-define=IMPRINT_URL=${{ vars.IMPRINT_URL }}
+          flutter build appbundle --release --flavor ${{ matrix.flavor }} \
+            --dart-define=EXAM=${{ matrix.flavor }} \
+            --dart-define=ADMOB_INTERSTITIAL=$AD_INTERSTITIAL \
+            --dart-define=ADMOB_REWARDED=$AD_REWARDED \
+            --dart-define=ADMOB_BANNER=$AD_BANNER
 
       - uses: actions/upload-artifact@v4
         with:
-          name: einbtest-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: ${{ matrix.flavor == 'fr' && 'examcivique' || 'einbtest' }}-apk
+          path: build/app/outputs/flutter-apk/app-${{ matrix.flavor }}-release.apk
 
       - uses: actions/upload-artifact@v4
         with:
-          name: einbtest-aab
-          path: build/app/outputs/bundle/release/app-release.aab
+          name: ${{ matrix.flavor == 'fr' && 'examcivique' || 'einbtest' }}-aab
+          path: build/app/outputs/bundle/${{ matrix.flavor }}Release/app-${{ matrix.flavor }}-release.aab

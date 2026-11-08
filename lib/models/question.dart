@@ -1,7 +1,10 @@
 class Question {
   final String id; // G001 .. G300, BW01 .. TH10
   final int num; // 1..300 general, 1..10 per Land
-  final String? land; // null for general, else BW/BY/BE/...
+  final String? land; // DE only: null for general, else BW/BY/BE/...
+  /// Segments this question belongs to (DE: its state; FR: CSP/CR/NAT). null = every segment.
+  final List<String>? segments;
+  final String kind; // 'official' | 'situation'
   final String topic; // grundrechte, demokratie, ..., bundesland
   final String field; // demokratie | geschichte | gesellschaft | bundesland
   final String question;
@@ -16,6 +19,8 @@ class Question {
     required this.id,
     required this.num,
     required this.land,
+    required this.segments,
+    this.kind = 'official',
     required this.topic,
     required this.field,
     required this.question,
@@ -27,7 +32,7 @@ class Question {
     required this.optionsTr,
   });
 
-  bool get isGeneral => land == null;
+  bool get isGeneral => segments == null;
   bool get hasImages => images.isNotEmpty;
 
   factory Question.fromJson(Map<String, dynamic> j) {
@@ -42,6 +47,9 @@ class Question {
       id: j['id'] as String,
       num: j['num'] as int,
       land: j['land'] as String?,
+      segments: (j['segments'] as List?)?.map((e) => e as String).toList() ??
+          (j['land'] == null ? null : [j['land'] as String]),
+      kind: (j['kind'] as String?) ?? 'official',
       topic: (j['topic'] as String?) ?? (j['land'] == null ? 'sonstiges' : 'bundesland'),
       field: (j['field'] as String?) ?? (j['land'] == null ? 'demokratie' : 'bundesland'),
       question: j['question'] as String,
@@ -54,51 +62,6 @@ class Question {
     );
   }
 
-  String explanationFor(String lang) => explanation[lang] ?? explanation['de'] ?? '';
+  /// Explanation in [lang], falling back to the exam's own language.
+  String explanationFor(String lang, String baseLang) => explanation[lang] ?? explanation[baseLang] ?? '';
 }
-
-class LandInfo {
-  final String code;
-  final String nameDe;
-  const LandInfo(this.code, this.nameDe);
-}
-
-const kLaender = <LandInfo>[
-  LandInfo('BW', 'Baden-Württemberg'),
-  LandInfo('BY', 'Bayern'),
-  LandInfo('BE', 'Berlin'),
-  LandInfo('BB', 'Brandenburg'),
-  LandInfo('HB', 'Bremen'),
-  LandInfo('HH', 'Hamburg'),
-  LandInfo('HE', 'Hessen'),
-  LandInfo('MV', 'Mecklenburg-Vorpommern'),
-  LandInfo('NI', 'Niedersachsen'),
-  LandInfo('NW', 'Nordrhein-Westfalen'),
-  LandInfo('RP', 'Rheinland-Pfalz'),
-  LandInfo('SL', 'Saarland'),
-  LandInfo('SN', 'Sachsen'),
-  LandInfo('ST', 'Sachsen-Anhalt'),
-  LandInfo('SH', 'Schleswig-Holstein'),
-  LandInfo('TH', 'Thüringen'),
-];
-
-/// Topic keys in display order with German and localized names are kept in strings.json
-/// under "topic_<key>". This list defines the order.
-const kTopicOrder = <String>[
-  'grundrechte',
-  'demokratie',
-  'staatsorgane',
-  'foederalismus',
-  'rechtsstaat',
-  'parteien',
-  'sozialstaat',
-  'ns_zeit',
-  'nachkrieg_ddr',
-  'europa',
-  'familie',
-  'alltag',
-  'religion_kultur',
-  'migration',
-  'symbole',
-  'bundesland',
-];

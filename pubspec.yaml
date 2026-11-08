@@ -1,5 +1,5 @@
 name: einbtest
-description: Einbürgerungstest 2026 – alle offiziellen Fragen, Prüfungssimulation, Erklärungen in 6 Sprachen.
+description: Exam trainers (Einbürgerungstest DE, Examen civique FR) built from one code base.
 publish_to: "none"
 version: 1.0.0+1
 
@@ -28,13 +28,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/data/questions.json
     - assets/data/strings.json
+    - assets/de/
+    - assets/fr/
     - assets/images/
-
-flutter_launcher_icons:
-  android: true
-  ios: false
-  image_path: "assets/icon/icon.png"
-  adaptive_icon_background: "#1F3A5F"
-  adaptive_icon_foreground: "assets/icon/icon_fg.png"

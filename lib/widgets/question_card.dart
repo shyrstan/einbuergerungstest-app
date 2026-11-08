@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../exam/exam_config.dart';
 import '../l10n/strings.dart';
 import '../models/question.dart';
 import 'ltr_text.dart';
@@ -28,12 +29,25 @@ class QuestionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final s = S(lang);
-    final tr = showTranslation && lang != 'de' ? q.questionTr[lang] : null;
-    final optTr = showTranslation && lang != 'de' ? q.optionsTr[lang] : null;
+    final base = ExamConfig.current.baseLang;
+    final tr = showTranslation && lang != base ? q.questionTr[lang] : null;
+    final optTr = showTranslation && lang != base ? q.optionsTr[lang] : null;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        if (q.kind == 'situation')
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(color: cs.tertiaryContainer, borderRadius: BorderRadius.circular(20)),
+                child: Text(s.t('situation_badge'), style: TextStyle(fontSize: 12, color: cs.onTertiaryContainer)),
+              ),
+            ),
+          ),
         LtrText(q.question, style: Theme.of(context).textTheme.titleLarge?.copyWith(height: 1.3)),
         if (tr != null) ...[
           const SizedBox(height: 6),

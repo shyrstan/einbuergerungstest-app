@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../exam/exam_config.dart';
 import '../l10n/strings.dart';
 import '../models/question.dart';
 import '../services/ads.dart';
@@ -55,7 +56,7 @@ class ExamScreen extends StatefulWidget {
 }
 
 class _ExamScreenState extends State<ExamScreen> {
-  static const duration = Duration(minutes: 60);
+  static Duration get duration => ExamConfig.current.examDuration;
   late final List<Question> _qs;
   final Map<int, int> _answers = {};
   int _i = 0;
@@ -258,7 +259,7 @@ class ExamResultScreen extends StatelessWidget {
               Text(s.t('result_score', {'c': result.correct, 'n': result.total}),
                   style: Theme.of(context).textTheme.titleLarge, textAlign: TextAlign.center),
               if (timeUp) Padding(padding: const EdgeInsets.only(top: 8), child: Text(s.t('exam_time_up'), textAlign: TextAlign.center)),
-              if (!passed) Padding(padding: const EdgeInsets.only(top: 8), child: Text(s.t('result_need'), textAlign: TextAlign.center)),
+              if (!passed) Padding(padding: const EdgeInsets.only(top: 8), child: Text(s.t('result_need', {'n': ExamConfig.current.passMark}), textAlign: TextAlign.center)),
               const Spacer(),
               if (result.wrongIds.isNotEmpty)
                 OutlinedButton(
@@ -307,10 +308,11 @@ class ExamReviewScreen extends StatelessWidget {
                 Text('${k + 1}. ${q.id}', style: TextStyle(color: Theme.of(context).colorScheme.outline)),
                 const SizedBox(height: 6),
                 QuestionCard(q: q, selected: answers[k], reveal: true, lang: st.lang, showTranslation: st.premium, onSelect: null),
-                if ((q.explanation['de'] ?? '').isNotEmpty)
+                if ((q.explanation[st.exam.baseLang] ?? '').isNotEmpty)
                   (st.premium && st.lang == 'ar')
-                      ? Text(q.explanationFor('ar'), style: const TextStyle(height: 1.35))
-                      : LtrText(q.explanationFor(st.premium ? st.lang : 'de'), style: const TextStyle(height: 1.35)),
+                      ? Text(q.explanationFor('ar', st.exam.baseLang), style: const TextStyle(height: 1.35))
+                      : LtrText(q.explanationFor(st.premium ? st.lang : st.exam.baseLang, st.exam.baseLang),
+                          style: const TextStyle(height: 1.35)),
               ],
             );
           },

@@ -22,13 +22,28 @@ android {
     kotlinOptions { jvmTarget = '17' }
 
     defaultConfig {
-        applicationId "de.einbtest.app"
         minSdk 23
         targetSdk 35
         versionCode flutter.versionCode
         versionName flutter.versionName
-        // AdMob App ID: test ID by default, real one injected by CI from secrets
-        manifestPlaceholders["admobAppId"] = System.getenv("ADMOB_APP_ID") ?: "ca-app-pub-3940256099942544~3347511713"
+    }
+
+    // One code base, one app per exam. `flutter build appbundle --flavor de|fr`
+    flavorDimensions "exam"
+    productFlavors {
+        de {
+            dimension "exam"
+            applicationId "de.einbtest.app"
+            resValue "string", "app_name", "Einbürgerungstest 2026"
+            // AdMob App ID: Google's test ID by default, the real one comes from CI secrets
+            manifestPlaceholders["admobAppId"] = System.getenv("ADMOB_APP_ID_DE") ?: (System.getenv("ADMOB_APP_ID") ?: "ca-app-pub-3940256099942544~3347511713")
+        }
+        fr {
+            dimension "exam"
+            applicationId "fr.examcivique.app"
+            resValue "string", "app_name", "Examen civique 2026"
+            manifestPlaceholders["admobAppId"] = System.getenv("ADMOB_APP_ID_FR") ?: "ca-app-pub-3940256099942544~3347511713"
+        }
     }
 
     signingConfigs {

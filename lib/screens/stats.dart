@@ -58,7 +58,7 @@ class StatsScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(s.t('stats_by_topic'), style: Theme.of(context).textTheme.titleMedium),
             const SizedBox(height: 8),
-            for (final t in kTopicOrder)
+            for (final t in st.exam.topicOrder)
               if (st.byTopic(t).isNotEmpty) _TopicRow(label: s.t('topic_$t'), qs: st.byTopic(t)),
             const SizedBox(height: 16),
             Text('${s.t('stats_exams')} · $passed ${s.t('stats_passed')}', style: Theme.of(context).textTheme.titleMedium),

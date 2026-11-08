@@ -20,7 +20,7 @@ class TopicsScreen extends StatelessWidget {
         body: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            for (final t in kTopicOrder)
+            for (final t in st.exam.topicOrder)
               if (st.byTopic(t).isNotEmpty) _TopicTile(topic: t, questions: st.byTopic(t)),
           ],
         ),

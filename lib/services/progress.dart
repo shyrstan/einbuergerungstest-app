@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../exam/exam_config.dart';
 import '../models/question.dart';
 
 /// Per-question learning state (simple Leitner boxes 0..4).
@@ -32,7 +33,7 @@ class ExamResult {
   final int seconds;
   final List<String> wrongIds;
   ExamResult(this.ts, this.correct, this.total, this.seconds, this.wrongIds);
-  bool get passed => correct >= 17;
+  bool get passed => correct >= ExamConfig.current.passMark;
   Map<String, dynamic> toJson() => {'t': ts, 'c': correct, 'n': total, 's': seconds, 'w': wrongIds};
   factory ExamResult.fromJson(Map<String, dynamic> j) => ExamResult(
       j['t'], j['c'], j['n'], j['s'] ?? 0, (j['w'] as List? ?? []).map((e) => e as String).toList());
@@ -52,8 +53,9 @@ class AppState extends ChangeNotifier {
   final Map<String, QState> _state = {};
   List<ExamResult> _exams = [];
 
+  /// DE: federal state; FR: CSP / CR / NAT. Stored under the historic key 'land'.
   String? land;
-  String lang = 'de';
+  String lang = ExamConfig.current.baseLang;
   bool premium = false;
   bool onboarded = false;
   int answeredCount = 0; // drives interstitial frequency
@@ -66,7 +68,8 @@ class AppState extends ChangeNotifier {
     _all = questions;
     _p = await SharedPreferences.getInstance();
     land = _p!.getString(_kLand);
-    lang = _p!.getString(_kLang) ?? 'de';
+    lang = _p!.getString(_kLang) ?? ExamConfig.current.baseLang;
+    if (!ExamConfig.current.langs.contains(lang)) lang = ExamConfig.current.baseLang;
     premium = _p!.getBool(_kPremium) ?? false;
     onboarded = _p!.getBool(_kOnboarded) ?? false;
     answeredCount = _p!.getInt(_kAnswered) ?? 0;
@@ -107,14 +110,18 @@ class AppState extends ChangeNotifier {
   }
 
   // ---------- question sets ----------
-  List<Question> get general => _all.where((q) => q.isGeneral).toList();
-  List<Question> get landQuestions => land == null ? const [] : _all.where((q) => q.land == land).toList();
+  ExamConfig get exam => ExamConfig.current;
 
-  /// All questions relevant for the user's exam: 300 general + 10 of their Land.
-  List<Question> get relevant => [...general, ...landQuestions];
+  /// Main pool: DE 300 general questions; FR official questions of the chosen permit.
+  List<Question> get general => exam.mainPool(_all, land);
 
-  List<Question> byTopic(String topic) =>
-      topic == 'bundesland' ? landQuestions : general.where((q) => q.topic == topic).toList();
+  /// Second pool: DE 10 questions of the state; FR situational questions.
+  List<Question> get landQuestions => exam.specialPool(_all, land);
+
+  /// All questions relevant for the user's exam.
+  List<Question> get relevant => exam.relevant(_all, land);
+
+  List<Question> byTopic(String topic) => exam.byTopic(_all, topic, land);
 
   QState stateOf(String id) => _state[id] ??= QState();
 
@@ -149,15 +156,8 @@ class AppState extends ChangeNotifier {
     return scored.take(limit).map((e) => e.key).toList();
   }
 
-  /// Official exam: 33 questions = 30 general + 3 from the user's Land, 60 minutes, pass at 17.
-  List<Question> buildExam() {
-    final rnd = Random();
-    final g = [...general]..shuffle(rnd);
-    final l = [...landQuestions]..shuffle(rnd);
-    final exam = <Question>[...g.take(30), ...l.take(3)];
-    exam.shuffle(rnd);
-    return exam;
-  }
+  /// A random exam with the official composition of the current exam.
+  List<Question> buildExam() => exam.buildExam(_all, land, Random());
 
   // ---------- recording ----------
   Future<void> recordAnswer(Question q, bool correct) async {

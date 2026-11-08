@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../l10n/strings.dart';
-import '../models/question.dart';
+import '../exam/exam_config.dart';
 import '../services/progress.dart';
 import 'home.dart';
 
@@ -14,7 +14,7 @@ class OnboardingScreen extends StatefulWidget {
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   String? _land;
-  String _lang = 'de';
+  String _lang = ExamConfig.current.baseLang;
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     value: _land,
                     isExpanded: true,
                     hint: const Text('—'),
-                    items: kLaender.map((l) => DropdownMenuItem(value: l.code, child: Text(l.nameDe))).toList(),
+                    items: ExamConfig.current.segments.map((l) => DropdownMenuItem(value: l.code, child: Text(l.name(s)))).toList(),
                     onChanged: (v) => setState(() => _land = v),
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../exam/exam_config.dart';
 import '../l10n/strings.dart';
 import '../models/question.dart';
 import '../services/ads.dart';
@@ -69,7 +70,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
     final st = context.watch<AppState>();
     final s = S.of(context);
     final lang = st.lang;
-    final canSeeForeign = lang == 'de' || st.premium || _unlockedTranslation;
+    final canSeeForeign = lang == ExamConfig.current.baseLang || st.premium || _unlockedTranslation;
 
     return Directionality(
       textDirection: s.direction,
@@ -137,8 +138,9 @@ class _Feedback extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = S(lang);
     final cs = Theme.of(context).colorScheme;
-    final de = q.explanation['de'] ?? '';
-    final foreign = lang == 'de' ? null : q.explanation[lang];
+    final base = ExamConfig.current.baseLang;
+    final de = q.explanation[base] ?? '';
+    final foreign = lang == base ? null : q.explanation[lang];
 
     return Padding(
       padding: const EdgeInsets.only(top: 8),

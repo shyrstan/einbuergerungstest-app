@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'exam/exam_config.dart';
 import 'l10n/strings.dart';
 import 'models/question.dart';
 import 'screens/home.dart';
@@ -16,8 +17,9 @@ import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ExamConfig.current = ExamConfig.fromFlavor();
   await S.load();
-  final raw = await rootBundle.loadString('assets/data/questions.json');
+  final raw = await rootBundle.loadString(ExamConfig.current.questionsAsset);
   final questions = (jsonDecode(raw) as List).map((e) => Question.fromJson(e as Map<String, dynamic>)).toList();
   final state = AppState();
   await state.init(questions);
@@ -43,10 +45,10 @@ class EinbApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<AppState>();
     return MaterialApp(
-      title: 'Einbürgerungstest 2026',
+      title: S(state.lang).t('app_title'),
       debugShowCheckedModeBanner: false,
       locale: Locale(state.lang),
-      supportedLocales: const [Locale('de'), Locale('en'), Locale('tr'), Locale('ar'), Locale('ru'), Locale('uk')],
+      supportedLocales: [for (final l in ExamConfig.current.langs) Locale(l)],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
