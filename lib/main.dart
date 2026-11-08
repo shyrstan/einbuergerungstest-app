@@ -12,6 +12,7 @@ import 'screens/onboarding.dart';
 import 'services/ads.dart';
 import 'services/iap.dart';
 import 'services/progress.dart';
+import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +42,6 @@ class EinbApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AppState>();
-    const seed = Color(0xFF1F3A5F);
     return MaterialApp(
       title: 'Einbürgerungstest 2026',
       debugShowCheckedModeBanner: false,
@@ -52,14 +52,7 @@ class EinbApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: seed),
-        cardTheme: const CardThemeData(elevation: 0, margin: EdgeInsets.zero),
-        filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(52), textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-        ),
-      ),
+      theme: buildAppTheme(),
       home: state.onboarded && state.land != null ? const HomeScreen() : const OnboardingScreen(),
     );
   }

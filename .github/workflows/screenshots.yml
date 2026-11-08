@@ -1,0 +1,61 @@
+name: Store screenshots
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tool/screenshots/**"
+      - ".github/workflows/screenshots.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Pub get
+        run: flutter pub get
+
+      - name: Collect fonts (Roboto + Noto Sans Arabic)
+        run: |
+          set -x
+          mkdir -p tool/screenshots/fonts
+          FM="$FLUTTER_ROOT/bin/cache/artifacts/material_fonts"
+          ls -la "$FM" || true
+          find "$FM" -iname 'roboto-*.ttf' -exec cp {} tool/screenshots/fonts/ \; || true
+          if ! ls tool/screenshots/fonts | grep -qi '^roboto'; then
+            for w in Regular Medium Bold Black; do
+              curl -fsSL -o "tool/screenshots/fonts/Roboto-$w.ttf" \
+                "https://github.com/googlefonts/roboto-2/raw/main/src/hinted/Roboto-$w.ttf" || true
+            done
+          fi
+          if ! ls tool/screenshots/fonts | grep -qi '^roboto'; then
+            curl -fsSL -o "tool/screenshots/fonts/Roboto-Variable.ttf" \
+              "https://github.com/google/fonts/raw/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf"
+          fi
+          curl -fsSL -o tool/screenshots/fonts/NotoSansArabic.ttf \
+            "https://github.com/google/fonts/raw/main/ofl/notosansarabic/NotoSansArabic%5Bwdth%2Cwght%5D.ttf" || true
+          ls -la tool/screenshots/fonts
+
+      - name: Render screenshots
+        run: flutter test tool/screenshots/store_screenshots_test.dart --reporter expanded
+
+      - name: Publish to store-assets branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: store-assets
+          publish_dir: ./store_out
+          force_orphan: true
+          enable_jekyll: true
+          commit_message: "Store screenshots [skip ci]"

@@ -46,7 +46,9 @@ class ExamIntroScreen extends StatelessWidget {
 }
 
 class ExamScreen extends StatefulWidget {
-  const ExamScreen({super.key});
+  /// Fixed question list (used for store screenshots); random exam if null.
+  final List<Question>? questions;
+  const ExamScreen({super.key, this.questions});
   @override
   State<ExamScreen> createState() => _ExamScreenState();
 }
@@ -63,7 +65,7 @@ class _ExamScreenState extends State<ExamScreen> {
   @override
   void initState() {
     super.initState();
-    _qs = context.read<AppState>().buildExam();
+    _qs = widget.questions ?? context.read<AppState>().buildExam();
     _start = DateTime.now();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
       final left = duration - DateTime.now().difference(_start);

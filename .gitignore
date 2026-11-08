@@ -9,3 +9,7 @@ android/key.properties
 *.keystore
 .idea/
 *.iml
+
+# store screenshot rendering
+store_out/
+tool/screenshots/fonts/
