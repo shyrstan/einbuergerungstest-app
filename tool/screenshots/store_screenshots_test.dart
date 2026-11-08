@@ -580,7 +580,7 @@ void main() {
         await shot(2, PracticeScreen(title: s.t('topic_principes'), pool: poolStartingWith(q1, exam.byTopic(questions, 'principes', store.segment)), smart: false, shuffle: false),
             act: () => answerAndReveal(q1));
         // 3. Situational question
-        final q2 = byId('S051');
+        final q2 = byId('S055');
         await shot(3, PracticeScreen(title: s.t('menu_situations'), pool: poolStartingWith(q2, exam.specialPool(questions, store.segment)), smart: false, shuffle: false),
             act: () => answerAndReveal(q2));
       }
