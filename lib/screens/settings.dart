@@ -6,10 +6,13 @@ import 'package:url_launcher/url_launcher.dart';
 import '../l10n/strings.dart';
 import '../models/question.dart';
 import '../services/iap.dart';
+import '../services/ads.dart';
 import '../services/progress.dart';
 
-const kPrivacyUrl = String.fromEnvironment('PRIVACY_URL', defaultValue: 'https://example.com/privacy');
-const kImprintUrl = String.fromEnvironment('IMPRINT_URL', defaultValue: 'https://example.com/imprint');
+const _privacyEnv = String.fromEnvironment('PRIVACY_URL');
+String get kPrivacyUrl => _privacyEnv.isEmpty ? 'https://shyrstan.github.io/einbtest-legal/privacy.html' : _privacyEnv;
+const _imprintEnv = String.fromEnvironment('IMPRINT_URL');
+String get kImprintUrl => _imprintEnv.isEmpty ? 'https://shyrstan.github.io/einbtest-legal/imprint.html' : _imprintEnv;
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -81,6 +84,16 @@ class SettingsScreen extends StatelessWidget {
               leading: const Icon(Icons.privacy_tip_outlined),
               title: Text(s.t('settings_privacy')),
               onTap: () => launchUrl(Uri.parse(kPrivacyUrl), mode: LaunchMode.externalApplication),
+            ),
+            FutureBuilder<bool>(
+              future: AdService.instance.privacyOptionsRequired(),
+              builder: (_, snap) => snap.data == true
+                  ? ListTile(
+                      leading: const Icon(Icons.manage_accounts_outlined),
+                      title: Text(s.t('settings_ads_privacy')),
+                      onTap: () => AdService.instance.showPrivacyOptions(),
+                    )
+                  : const SizedBox.shrink(),
             ),
             ListTile(
               leading: const Icon(Icons.info_outline),

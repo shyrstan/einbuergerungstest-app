@@ -13,9 +13,12 @@ class AdService {
   static const _testRewarded = 'ca-app-pub-3940256099942544/5224354917';
   static const _testBanner = 'ca-app-pub-3940256099942544/6300978111';
 
-  static const interstitialId = String.fromEnvironment('ADMOB_INTERSTITIAL', defaultValue: _testInterstitial);
-  static const rewardedId = String.fromEnvironment('ADMOB_REWARDED', defaultValue: _testRewarded);
-  static const bannerId = String.fromEnvironment('ADMOB_BANNER', defaultValue: _testBanner);
+  static const _interstitialIdEnv = String.fromEnvironment('ADMOB_INTERSTITIAL');
+  static String get interstitialId => _interstitialIdEnv.isEmpty ? _testInterstitial : _interstitialIdEnv;
+  static const _rewardedIdEnv = String.fromEnvironment('ADMOB_REWARDED');
+  static String get rewardedId => _rewardedIdEnv.isEmpty ? _testRewarded : _rewardedIdEnv;
+  static const _bannerIdEnv = String.fromEnvironment('ADMOB_BANNER');
+  static String get bannerId => _bannerIdEnv.isEmpty ? _testBanner : _bannerIdEnv;
 
   bool _initialized = false;
   bool _consentDone = false;
@@ -25,6 +28,8 @@ class AdService {
 
   /// Minimum gap between interstitials. Never below 3 minutes – rating protection.
   static const minGap = Duration(minutes: 3);
+
+  bool get _supported => _initialized;
 
   Future<void> init() async {
     if (_initialized || kIsWeb || !(Platform.isAndroid || Platform.isIOS)) return;
@@ -139,4 +144,23 @@ class AdService {
   }
 
   bool get consentDone => _consentDone;
+
+  /// True when the user must be offered a way to change ad consent (EU/UK).
+  Future<bool> privacyOptionsRequired() async {
+    if (!_supported) return false;
+    try {
+      return await ConsentInformation.instance.getPrivacyOptionsRequirementStatus() ==
+          PrivacyOptionsRequirementStatus.required;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Re-opens the consent form so the user can change their choice.
+  Future<void> showPrivacyOptions() async {
+    if (!_supported) return;
+    try {
+      await ConsentForm.showPrivacyOptionsForm((_) {});
+    } catch (_) {}
+  }
 }

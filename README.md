@@ -11,5 +11,5 @@ exam simulation (33 questions / 60 min / pass at 17), explanations in DE/EN/TR/A
 ## Secrets / variables (GitHub → Settings → Secrets and variables → Actions)
 Secrets: `ADMOB_APP_ID`, `ADMOB_INTERSTITIAL`, `ADMOB_REWARDED`, `ADMOB_BANNER`,
 `KEYSTORE_B64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`.
-Variables: `PRIVACY_URL`, `IMPRINT_URL`.
+Variables (optional): `PRIVACY_URL`, `IMPRINT_URL` — default to https://shyrstan.github.io/einbtest-legal/ (public repo shyrstan/einbtest-legal).
 Without them the app builds with Google's test ad units and a debug signature.
