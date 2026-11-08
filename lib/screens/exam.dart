@@ -7,6 +7,7 @@ import '../l10n/strings.dart';
 import '../models/question.dart';
 import '../services/ads.dart';
 import '../services/progress.dart';
+import '../widgets/ltr_text.dart';
 import '../widgets/question_card.dart';
 
 class ExamIntroScreen extends StatelessWidget {
@@ -307,7 +308,9 @@ class ExamReviewScreen extends StatelessWidget {
                 const SizedBox(height: 6),
                 QuestionCard(q: q, selected: answers[k], reveal: true, lang: st.lang, showTranslation: st.premium, onSelect: null),
                 if ((q.explanation['de'] ?? '').isNotEmpty)
-                  Text(q.explanationFor(st.premium ? st.lang : 'de'), style: const TextStyle(height: 1.35)),
+                  (st.premium && st.lang == 'ar')
+                      ? Text(q.explanationFor('ar'), style: const TextStyle(height: 1.35))
+                      : LtrText(q.explanationFor(st.premium ? st.lang : 'de'), style: const TextStyle(height: 1.35)),
               ],
             );
           },

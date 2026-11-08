@@ -5,6 +5,7 @@ import '../l10n/strings.dart';
 import '../models/question.dart';
 import '../services/ads.dart';
 import '../services/progress.dart';
+import '../widgets/ltr_text.dart';
 import '../widgets/question_card.dart';
 import 'settings.dart';
 
@@ -14,8 +15,9 @@ class PracticeScreen extends StatefulWidget {
   final String title;
   final List<Question> pool;
   final bool smart; // use Leitner ordering
+  final bool shuffle;
 
-  const PracticeScreen({super.key, required this.title, required this.pool, required this.smart});
+  const PracticeScreen({super.key, required this.title, required this.pool, required this.smart, this.shuffle = true});
 
   @override
   State<PracticeScreen> createState() => _PracticeScreenState();
@@ -32,7 +34,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
   void initState() {
     super.initState();
     final st = context.read<AppState>();
-    _queue = widget.smart ? st.smartQueue(widget.pool, limit: 20) : (List.of(widget.pool)..shuffle());
+    _queue = widget.smart ? st.smartQueue(widget.pool, limit: 20) : (widget.shuffle ? (List.of(widget.pool)..shuffle()) : List.of(widget.pool));
     if (!widget.smart && _queue.length > 40) _queue = _queue.take(40).toList();
   }
 
@@ -155,13 +157,13 @@ class _Feedback extends StatelessWidget {
               if (!correct) ...[
                 const SizedBox(height: 8),
                 Text(s.t('correct_answer_is'), style: TextStyle(color: cs.outline)),
-                Text(q.options[q.correct], style: const TextStyle(fontWeight: FontWeight.w600)),
+                LtrText(q.options[q.correct], style: const TextStyle(fontWeight: FontWeight.w600)),
               ],
               if (de.isNotEmpty) ...[
                 const SizedBox(height: 12),
                 Text(s.t('explanation'), style: TextStyle(color: cs.outline)),
                 const SizedBox(height: 4),
-                Text(de, style: const TextStyle(height: 1.35)),
+                LtrText(de, style: const TextStyle(height: 1.35)),
               ],
               if (foreign != null && foreign.isNotEmpty) ...[
                 const SizedBox(height: 12),

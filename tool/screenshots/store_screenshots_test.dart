@@ -424,7 +424,7 @@ void main() {
 
       // 2. Practice: answered correctly, explanation visible
       final q1 = byId('G001');
-      await shot(2, PracticeScreen(title: s.t('topic_grundrechte'), pool: [q1], smart: false), act: () async {
+      await shot(2, PracticeScreen(title: s.t('topic_grundrechte'), pool: [q1, ...questions.where((q) => q.topic == q1.topic && q.id != q1.id).take(19)], smart: false, shuffle: false), act: () async {
         await tester.tap(optionText(q1.options[q1.correct]));
         await tester.pump(const Duration(milliseconds: 300));
         await tester.tap(find.text(s.t('check')));
@@ -437,13 +437,16 @@ void main() {
 
       // 3. Picture question (coat of arms of Berlin)
       final q2 = byId('BE01');
-      await shot(3, PracticeScreen(title: 'Berlin', pool: [q2], smart: false), act: () async {
+      await shot(3, PracticeScreen(title: 'Berlin', pool: [q2, ...questions.where((q) => q.land == 'BE' && q.id != q2.id)], smart: false, shuffle: false), act: () async {
         await precacheImages(tester);
         await tester.tap(optionText(q2.options[q2.correct]));
         await tester.pump(const Duration(milliseconds: 300));
         await tester.tap(find.text(s.t('check')));
         await tester.pump(const Duration(milliseconds: 300));
         await tester.pump(const Duration(milliseconds: 300));
+        await tester.drag(find.byType(Scrollable).first, const Offset(0, -150));
+        await tester.pump(const Duration(milliseconds: 600));
+        await tester.pump(const Duration(milliseconds: 600));
       });
 
       // 4. Exam simulation in progress (question 8 of 33)

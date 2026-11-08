@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/strings.dart';
 import '../models/question.dart';
+import 'ltr_text.dart';
 
 /// Renders question text, optional images and the four options.
 /// [selected] is the user's pick, [reveal] shows right/wrong colouring.
@@ -33,7 +34,7 @@ class QuestionCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(q.question, style: Theme.of(context).textTheme.titleLarge?.copyWith(height: 1.3)),
+        LtrText(q.question, style: Theme.of(context).textTheme.titleLarge?.copyWith(height: 1.3)),
         if (tr != null) ...[
           const SizedBox(height: 6),
           Text(tr, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: cs.outline)),
@@ -120,7 +121,7 @@ class _Option extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(text, style: const TextStyle(fontSize: 16, height: 1.3)),
+                      LtrText(text, style: const TextStyle(fontSize: 16, height: 1.3)),
                       if (translation != null)
                         Padding(
                           padding: const EdgeInsets.only(top: 2),
