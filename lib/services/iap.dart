@@ -11,7 +11,7 @@ class IapService {
   static const productId = 'premium_unlock';
 
   final AppState state;
-  final InAppPurchase _iap = InAppPurchase.instance;
+  late final InAppPurchase _iap = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>>? _sub;
   ProductDetails? product;
   bool available = false;

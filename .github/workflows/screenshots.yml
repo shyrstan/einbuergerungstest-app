@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "tool/screenshots/**"
+      - "lib/**"
       - ".github/workflows/screenshots.yml"
 
 permissions:
