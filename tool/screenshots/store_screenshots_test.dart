@@ -570,27 +570,27 @@ void main() {
       }
 
       // 4. Exam simulation in progress (question 8)
-      final exam = examQuestions();
-      await shot(4, ExamScreen(questions: exam), act: () async {
+      final examQs = examQuestions();
+      await shot(4, ExamScreen(questions: examQs), act: () async {
         for (var k = 0; k < 7; k++) {
-          final q = exam[k];
+          final q = examQs[k];
           await tester.tap(optionText(q.options[q.correct]));
           await tester.pump(const Duration(milliseconds: 200));
           await tester.tap(find.widgetWithText(FilledButton, s.t('next')));
           await tester.pump(const Duration(milliseconds: 400));
         }
-        final q = exam[7];
+        final q = examQs[7];
         await tester.tap(optionText(q.options[q.correct]));
         await tester.pump(const Duration(milliseconds: 400));
       });
 
       // 5. Exam result
-      final wrong = [exam[4].id, exam[11].id, exam[20].id];
+      final wrong = [examQs[4].id, examQs[11].id, examQs[20].id];
       await shot(
         5,
         ExamResultScreen(
           result: ExamResult(DateTime(2026, 11, 8, 18).millisecondsSinceEpoch, exam.examSize - 3, exam.examSize, 1560, wrong),
-          questions: exam,
+          questions: examQs,
           answers: const {},
         ),
       );
