@@ -20,6 +20,8 @@ jobs:
       AD_INTERSTITIAL: ${{ matrix.flavor == 'fr' && secrets.ADMOB_INTERSTITIAL_FR || secrets.ADMOB_INTERSTITIAL }}
       AD_REWARDED: ${{ matrix.flavor == 'fr' && secrets.ADMOB_REWARDED_FR || secrets.ADMOB_REWARDED }}
       AD_BANNER: ${{ matrix.flavor == 'fr' && secrets.ADMOB_BANNER_FR || secrets.ADMOB_BANNER }}
+      # Job-level so that the step `if:` below can see it (step-level env is not visible there).
+      KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
     steps:
       - uses: actions/checkout@v4
 
@@ -50,8 +52,6 @@ jobs:
 
       - name: Decode keystore (if configured)
         if: ${{ env.KEYSTORE_B64 != '' }}
-        env:
-          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
         run: |
           echo "$KEYSTORE_B64" | base64 -d > android/app/upload-keystore.jks
           cat > android/key.properties <<EOF
@@ -71,6 +71,9 @@ jobs:
 
       - name: Build AAB
         run: |
+          if [ -z "$KEYSTORE_B64" ]; then
+            echo "::warning::No upload keystore secrets - the AAB is debug-signed and Play Console will reject it."
+          fi
           flutter build appbundle --release --flavor ${{ matrix.flavor }} \
             --dart-define=EXAM=${{ matrix.flavor }} \
             --dart-define=ADMOB_INTERSTITIAL=$AD_INTERSTITIAL \
