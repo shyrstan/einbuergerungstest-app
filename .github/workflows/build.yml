@@ -103,18 +103,19 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          pattern: "*-apk"
           path: dl
       - name: Push to apk branch
         run: |
           mkdir out
           cp dl/einbtest-apk/*.apk out/Einbuergerungstest.apk
           cp dl/examcivique-apk/*.apk out/ExamenCivique.apk
+          cp dl/einbtest-aab/*.aab out/Einbuergerungstest.aab
+          cp dl/examcivique-aab/*.aab out/ExamenCivique.aab
           echo "Built from ${GITHUB_SHA} on $(date -u +%F' '%H:%M) UTC" > out/README.md
           cd out
           git init -q -b apk
           git config user.name "github-actions"
           git config user.email "github-actions@users.noreply.github.com"
           git add -A
-          git commit -q -m "APKs for ${GITHUB_SHA} [skip ci]"
+          git commit -q -m "APKs and AABs for ${GITHUB_SHA} [skip ci]"
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" apk
