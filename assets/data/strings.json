@@ -63,7 +63,7 @@
   "settings_title": "Einstellungen",
   "settings_lang": "Sprache",
   "settings_premium": "Premium",
-  "settings_premium_text": "Keine Werbung. Erklärungen in allen Sprachen. Einmal zahlen, für immer.",
+  "settings_premium_text": "Keine Werbung. Unbegrenzt Prüfungssimulationen. Einmal zahlen, für immer.",
   "settings_premium_active": "Premium ist aktiv. Danke!",
   "settings_restore": "Kauf wiederherstellen",
   "settings_privacy": "Datenschutz",
@@ -77,7 +77,10 @@
   "delete": "Löschen",
   "image_hint": "Bild {i}",
   "ad_loading": "Werbung wird geladen …",
-  "ad_unavailable": "Gerade keine Werbung verfügbar. Versuch es gleich noch einmal."
+  "ad_unavailable": "Gerade keine Werbung verfügbar. Versuch es gleich noch einmal.",
+  "exam_limit_title": "Kostenlose Prüfung für heute genutzt",
+  "exam_limit_text": "Eine Prüfungssimulation pro Tag ist kostenlos. Sieh dir ein kurzes Video an, um eine weitere zu starten – oder hol dir Premium für unbegrenzte Prüfungen.",
+  "exam_watch_ad": "Video ansehen und starten"
  },
  "en": {
   "onb_welcome": "Welcome!",
@@ -132,7 +135,7 @@
   "settings_title": "Settings",
   "settings_lang": "Language",
   "settings_premium": "Premium",
-  "settings_premium_text": "No ads. Explanations in all languages. Pay once, keep forever.",
+  "settings_premium_text": "No ads. Unlimited practice exams. Pay once, keep forever.",
   "settings_premium_active": "Premium is active. Thank you!",
   "settings_restore": "Restore purchase",
   "settings_privacy": "Privacy policy",
@@ -146,7 +149,10 @@
   "delete": "Delete",
   "image_hint": "Picture {i}",
   "ad_loading": "Loading ad …",
-  "ad_unavailable": "No ad available right now. Please try again in a moment."
+  "ad_unavailable": "No ad available right now. Please try again in a moment.",
+  "exam_limit_title": "Today's free exam is used",
+  "exam_limit_text": "One practice exam per day is free. Watch a short video to start another one, or get Premium for unlimited exams.",
+  "exam_watch_ad": "Watch video and start"
  },
  "ru": {
   "onb_welcome": "Добро пожаловать!",
@@ -201,7 +207,7 @@
   "settings_title": "Настройки",
   "settings_lang": "Язык",
   "settings_premium": "Premium",
-  "settings_premium_text": "Без рекламы. Объяснения на всех языках. Оплата один раз — навсегда.",
+  "settings_premium_text": "Без рекламы. Пробные экзамены без ограничений. Оплата один раз — навсегда.",
   "settings_premium_active": "Premium активен. Спасибо!",
   "settings_restore": "Восстановить покупку",
   "settings_privacy": "Конфиденциальность",
@@ -215,7 +221,10 @@
   "delete": "Удалить",
   "image_hint": "Картинка {i}",
   "ad_loading": "Загрузка рекламы …",
-  "ad_unavailable": "Реклама сейчас недоступна. Попробуй через минуту."
+  "ad_unavailable": "Реклама сейчас недоступна. Попробуй через минуту.",
+  "exam_limit_title": "Бесплатный экзамен на сегодня использован",
+  "exam_limit_text": "Один пробный экзамен в день — бесплатно. Посмотри короткое видео, чтобы начать ещё один, или возьми Premium — экзамены без ограничений.",
+  "exam_watch_ad": "Смотреть видео и начать"
  },
  "uk": {
   "onb_welcome": "Ласкаво просимо!",
@@ -270,7 +279,7 @@
   "settings_title": "Налаштування",
   "settings_lang": "Мова",
   "settings_premium": "Premium",
-  "settings_premium_text": "Без реклами. Пояснення всіма мовами. Оплата один раз — назавжди.",
+  "settings_premium_text": "Без реклами. Пробні іспити без обмежень. Оплата один раз — назавжди.",
   "settings_premium_active": "Premium активний. Дякуємо!",
   "settings_restore": "Відновити покупку",
   "settings_privacy": "Конфіденційність",
@@ -284,7 +293,10 @@
   "delete": "Видалити",
   "image_hint": "Малюнок {i}",
   "ad_loading": "Завантаження реклами …",
-  "ad_unavailable": "Реклама зараз недоступна. Спробуй за хвилину."
+  "ad_unavailable": "Реклама зараз недоступна. Спробуй за хвилину.",
+  "exam_limit_title": "Безкоштовний іспит на сьогодні використано",
+  "exam_limit_text": "Один пробний іспит на день — безкоштовно. Переглянь коротке відео, щоб почати ще один, або візьми Premium — іспити без обмежень.",
+  "exam_watch_ad": "Переглянути відео й почати"
  },
  "tr": {
   "onb_welcome": "Hoş geldin!",
@@ -339,7 +351,7 @@
   "settings_title": "Ayarlar",
   "settings_lang": "Dil",
   "settings_premium": "Premium",
-  "settings_premium_text": "Reklamsız. Tüm dillerde açıklamalar. Bir kez öde, sonsuza kadar kullan.",
+  "settings_premium_text": "Reklamsız. Sınırsız deneme sınavı. Bir kez öde, sonsuza kadar.",
   "settings_premium_active": "Premium aktif. Teşekkürler!",
   "settings_restore": "Satın almayı geri yükle",
   "settings_privacy": "Gizlilik",
@@ -353,7 +365,10 @@
   "delete": "Sil",
   "image_hint": "Resim {i}",
   "ad_loading": "Reklam yükleniyor …",
-  "ad_unavailable": "Şu anda reklam yok. Lütfen biraz sonra tekrar dene."
+  "ad_unavailable": "Şu anda reklam yok. Lütfen biraz sonra tekrar dene.",
+  "exam_limit_title": "Bugünkü ücretsiz sınav kullanıldı",
+  "exam_limit_text": "Günde bir deneme sınavı ücretsizdir. Bir tane daha başlatmak için kısa bir video izle ya da sınırsız sınav için Premium'a geç.",
+  "exam_watch_ad": "Videoyu izle ve başla"
  },
  "ar": {
   "onb_welcome": "أهلاً بك!",
@@ -408,7 +423,7 @@
   "settings_title": "الإعدادات",
   "settings_lang": "اللغة",
   "settings_premium": "النسخة المميزة",
-  "settings_premium_text": "بدون إعلانات. شروحات بكل اللغات. ادفع مرة واحدة، للأبد.",
+  "settings_premium_text": "بدون إعلانات. اختبارات تجريبية بلا حدود. ادفع مرة واحدة، إلى الأبد.",
   "settings_premium_active": "النسخة المميزة مفعّلة. شكراً!",
   "settings_restore": "استعادة الشراء",
   "settings_privacy": "الخصوصية",
@@ -422,7 +437,10 @@
   "delete": "حذف",
   "image_hint": "صورة {i}",
   "ad_loading": "جارٍ تحميل الإعلان …",
-  "ad_unavailable": "لا يوجد إعلان متاح الآن. حاول مرة أخرى بعد قليل."
+  "ad_unavailable": "لا يوجد إعلان متاح الآن. حاول مرة أخرى بعد قليل.",
+  "exam_limit_title": "تم استخدام الاختبار المجاني لهذا اليوم",
+  "exam_limit_text": "اختبار تجريبي واحد يوميًا مجاني. شاهد فيديو قصيرًا لبدء اختبار آخر، أو اشترك في Premium لاختبارات بلا حدود.",
+  "exam_watch_ad": "شاهد الفيديو وابدأ"
  },
  "fr": {
   "onb_welcome": "Bienvenue !",
@@ -477,7 +495,7 @@
   "settings_title": "Paramètres",
   "settings_lang": "Langue",
   "settings_premium": "Premium",
-  "settings_premium_text": "Sans publicité. Explications dans toutes les langues. Un seul paiement, pour toujours.",
+  "settings_premium_text": "Sans publicité. Examens blancs illimités. Un seul paiement, pour toujours.",
   "settings_premium_active": "Premium est activé. Merci !",
   "settings_restore": "Restaurer l’achat",
   "settings_privacy": "Politique de confidentialité",
@@ -491,7 +509,10 @@
   "delete": "Supprimer",
   "image_hint": "Image {i}",
   "ad_loading": "Chargement de la publicité…",
-  "ad_unavailable": "Aucune publicité disponible pour le moment. Réessayez dans un instant."
+  "ad_unavailable": "Aucune publicité disponible pour le moment. Réessayez dans un instant.",
+  "exam_limit_title": "L’examen gratuit du jour est utilisé",
+  "exam_limit_text": "Un examen blanc par jour est gratuit. Regardez une courte vidéo pour en lancer un autre, ou passez à Premium pour des examens illimités.",
+  "exam_watch_ad": "Regarder la vidéo et commencer"
  },
  "pt": {
   "onb_welcome": "Bem-vindo!",
@@ -546,7 +567,7 @@
   "settings_title": "Definições",
   "settings_lang": "Idioma",
   "settings_premium": "Premium",
-  "settings_premium_text": "Sem anúncios. Explicações em todos os idiomas. Paga uma vez, para sempre.",
+  "settings_premium_text": "Sem anúncios. Exames simulados ilimitados. Pague uma vez, para sempre.",
   "settings_premium_active": "O Premium está ativo. Obrigado!",
   "settings_restore": "Restaurar compra",
   "settings_privacy": "Política de privacidade",
@@ -560,7 +581,10 @@
   "delete": "Apagar",
   "image_hint": "Imagem {i}",
   "ad_loading": "A carregar anúncio…",
-  "ad_unavailable": "Nenhum anúncio disponível de momento. Tente novamente daqui a pouco."
+  "ad_unavailable": "Nenhum anúncio disponível de momento. Tente novamente daqui a pouco.",
+  "exam_limit_title": "O exame gratuito de hoje já foi usado",
+  "exam_limit_text": "Um exame simulado por dia é gratuito. Veja um vídeo curto para começar outro ou passe para o Premium para exames ilimitados.",
+  "exam_watch_ad": "Ver o vídeo e começar"
  },
  "zh": {
   "onb_welcome": "欢迎！",
@@ -615,7 +639,7 @@
   "settings_title": "设置",
   "settings_lang": "语言",
   "settings_premium": "高级版",
-  "settings_premium_text": "无广告。所有语言的解释。一次付费，永久使用。",
+  "settings_premium_text": "无广告。模拟考试不限次数。一次付费，永久使用。",
   "settings_premium_active": "高级版已启用，谢谢！",
   "settings_restore": "恢复购买",
   "settings_privacy": "隐私政策",
@@ -629,6 +653,9 @@
   "delete": "删除",
   "image_hint": "图片 {i}",
   "ad_loading": "正在加载广告…",
-  "ad_unavailable": "暂时没有可用的广告，请稍后再试。"
+  "ad_unavailable": "暂时没有可用的广告，请稍后再试。",
+  "exam_limit_title": "今天的免费考试已用完",
+  "exam_limit_text": "每天可免费进行一次模拟考试。观看一段短视频即可再开始一次，或升级 Premium 享受不限次数的考试。",
+  "exam_watch_ad": "观看视频并开始"
  }
 }

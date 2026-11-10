@@ -10,6 +10,54 @@ import '../services/ads.dart';
 import '../services/progress.dart';
 import '../widgets/ltr_text.dart';
 import '../widgets/question_card.dart';
+import 'settings.dart';
+
+/// Starts a practice exam, honouring the daily allowance: free users get
+/// [AppState.freeExamsPerDay] exams a day, each further one costs a rewarded ad.
+/// If no ad can be shown the exam starts anyway - ad supply must never block learning.
+Future<void> startExam(BuildContext context) async {
+  final st = context.read<AppState>();
+  final s = S.of(context);
+  final nav = Navigator.of(context);
+  void go() {
+    st.markExamStarted();
+    nav.pushReplacement(MaterialPageRoute(builder: (_) => const ExamScreen()));
+  }
+
+  if (st.canStartExamFree) {
+    go();
+    return;
+  }
+  final choice = await showDialog<String>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: Text(s.t('exam_limit_title')),
+      content: Text(s.t('exam_limit_text')),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(ctx), child: Text(s.t('cancel'))),
+        TextButton(onPressed: () => Navigator.pop(ctx, 'premium'), child: Text(s.t('unlock_premium'))),
+        FilledButton.icon(
+          onPressed: () => Navigator.pop(ctx, 'ad'),
+          icon: const Icon(Icons.play_circle_outline),
+          label: Text(s.t('exam_watch_ad')),
+        ),
+      ],
+    ),
+  );
+  if (choice == 'premium') {
+    nav.push(MaterialPageRoute(builder: (_) => const SettingsScreen()));
+    return;
+  }
+  if (choice != 'ad') return;
+  var started = false;
+  void once() {
+    if (started) return;
+    started = true;
+    go();
+  }
+
+  await AdService.instance.showRewarded(onReward: once, onUnavailable: once);
+}
 
 class ExamIntroScreen extends StatelessWidget {
   const ExamIntroScreen({super.key});
@@ -36,7 +84,7 @@ class ExamIntroScreen extends StatelessWidget {
                 const SizedBox(height: 16),
               ],
               FilledButton(
-                onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ExamScreen())),
+                onPressed: () => startExam(context),
                 child: Text(s.t('exam_start')),
               ),
             ],
@@ -195,7 +243,7 @@ class _ExamScreenState extends State<ExamScreen> {
                       selected: _answers[_i],
                       reveal: false,
                       lang: st.lang,
-                      showTranslation: st.premium,
+                      showTranslation: true,
                       onSelect: (v) => setState(() => _answers[_i] = v),
                     ),
                   ],
@@ -269,7 +317,7 @@ class ExamResultScreen extends StatelessWidget {
                 ),
               const SizedBox(height: 8),
               FilledButton(
-                onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ExamScreen())),
+                onPressed: () => startExam(context),
                 child: Text(s.t('result_again')),
               ),
               TextButton(onPressed: () => Navigator.popUntil(context, (r) => r.isFirst), child: Text(s.t('result_home'))),
@@ -307,11 +355,11 @@ class ExamReviewScreen extends StatelessWidget {
               children: [
                 Text('${k + 1}. ${q.id}', style: TextStyle(color: Theme.of(context).colorScheme.outline)),
                 const SizedBox(height: 6),
-                QuestionCard(q: q, selected: answers[k], reveal: true, lang: st.lang, showTranslation: st.premium, onSelect: null),
+                QuestionCard(q: q, selected: answers[k], reveal: true, lang: st.lang, showTranslation: true, onSelect: null),
                 if ((q.explanation[st.exam.baseLang] ?? '').isNotEmpty)
-                  (st.premium && st.lang == 'ar')
+                  st.lang == 'ar'
                       ? Text(q.explanationFor('ar', st.exam.baseLang), style: const TextStyle(height: 1.35))
-                      : LtrText(q.explanationFor(st.premium ? st.lang : st.exam.baseLang, st.exam.baseLang),
+                      : LtrText(q.explanationFor(st.lang, st.exam.baseLang),
                           style: const TextStyle(height: 1.35)),
               ],
             );

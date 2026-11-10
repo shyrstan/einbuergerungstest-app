@@ -70,7 +70,8 @@ class _PracticeScreenState extends State<PracticeScreen> {
     final st = context.watch<AppState>();
     final s = S.of(context);
     final lang = st.lang;
-    final canSeeForeign = lang == ExamConfig.current.baseLang || st.premium || _unlockedTranslation;
+    // Translations and explanations in every language are free; exams are the gated part.
+    const canSeeForeign = true;
 
     return Directionality(
       textDirection: s.direction,

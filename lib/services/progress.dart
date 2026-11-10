@@ -47,6 +47,11 @@ class AppState extends ChangeNotifier {
   static const _kPremium = 'premium';
   static const _kOnboarded = 'onboarded';
   static const _kAnswered = 'answered_count';
+  static const _kExamDay = 'exam_day';
+  static const _kExamsToday = 'exams_today';
+
+  /// Free users get this many practice exams per day; more cost a rewarded ad.
+  static const freeExamsPerDay = 1;
 
   SharedPreferences? _p;
   List<Question> _all = const [];
@@ -100,6 +105,24 @@ class AppState extends ChangeNotifier {
   Future<void> setPremium(bool v) async {
     premium = v;
     await _p?.setBool(_kPremium, v);
+    notifyListeners();
+  }
+
+  // ---------- daily exam allowance ----------
+  static String _today() {
+    final d = DateTime.now();
+    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  }
+
+  int get examsStartedToday => _p?.getString(_kExamDay) == _today() ? (_p?.getInt(_kExamsToday) ?? 0) : 0;
+
+  /// True when the next exam can start without a rewarded ad.
+  bool get canStartExamFree => premium || examsStartedToday < freeExamsPerDay;
+
+  Future<void> markExamStarted() async {
+    final n = examsStartedToday + 1;
+    await _p?.setString(_kExamDay, _today());
+    await _p?.setInt(_kExamsToday, n);
     notifyListeners();
   }
 
