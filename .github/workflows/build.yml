@@ -124,6 +124,12 @@ jobs:
           path: dl
       - name: Push to apk branch
         run: |
+          # Runs can finish out of order; never let an older commit overwrite a newer build.
+          head=$(git ls-remote "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" refs/heads/main | cut -f1)
+          if [ "${{ github.ref }}" = "refs/heads/main" ] && [ -n "$head" ] && [ "$head" != "$GITHUB_SHA" ]; then
+            echo "Stale build $GITHUB_SHA (main is $head) - not publishing."
+            exit 0
+          fi
           mkdir out
           cp dl/einbtest-apk/*.apk out/Einbuergerungstest.apk
           cp dl/examcivique-apk/*.apk out/ExamenCivique.apk
