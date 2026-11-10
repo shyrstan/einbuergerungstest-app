@@ -19,7 +19,7 @@ LANGUES
 Interface et explications : français, English, العربية, Türkçe, Русский, Українська, Português, 中文.
 
 GRATUIT ET PREMIUM
-Toutes les questions, les examens blancs et les explications en français sont gratuits (avec publicité). Vous pouvez débloquer la traduction et l’explication dans votre langue question par question en regardant une courte vidéo publicitaire. Premium (achat unique, sans abonnement) supprime toutes les publicités et débloque toutes les traductions.
+Toutes les questions, les explications et les traductions dans toutes les langues sont gratuites (avec publicité). Un examen blanc par jour est gratuit ; vous pouvez en débloquer jusqu’à deux de plus en regardant une courte vidéo publicitaire. Premium (achat unique, sans abonnement) : aucune publicité et examens blancs illimités.
 
 SOURCE ET AVERTISSEMENT
 Les questions de connaissance proviennent des listes officielles publiées par le ministère de l’Intérieur sur formation-civique.interieur.gouv.fr (licence ouverte Etalab 2.0). Ces listes ne donnent pas les réponses : les réponses, les explications et les mises en situation ont été rédigées par nos soins, avec attention, mais ne constituent pas un conseil juridique.

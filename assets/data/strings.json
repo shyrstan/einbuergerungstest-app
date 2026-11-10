@@ -80,7 +80,8 @@
   "ad_unavailable": "Gerade keine Werbung verfügbar. Versuch es gleich noch einmal.",
   "exam_limit_title": "Kostenlose Prüfung für heute genutzt",
   "exam_limit_text": "Eine Prüfungssimulation pro Tag ist kostenlos. Sieh dir ein kurzes Video an, um eine weitere zu starten – oder hol dir Premium für unbegrenzte Prüfungen.",
-  "exam_watch_ad": "Video ansehen und starten"
+  "exam_watch_ad": "Video ansehen und starten",
+  "exam_limit_reached": "Die kostenlosen und per Video freigeschalteten Prüfungen für heute sind aufgebraucht. Morgen geht es weiter – oder hol dir Premium für unbegrenzte Prüfungen."
  },
  "en": {
   "onb_welcome": "Welcome!",
@@ -152,7 +153,8 @@
   "ad_unavailable": "No ad available right now. Please try again in a moment.",
   "exam_limit_title": "Today's free exam is used",
   "exam_limit_text": "One practice exam per day is free. Watch a short video to start another one, or get Premium for unlimited exams.",
-  "exam_watch_ad": "Watch video and start"
+  "exam_watch_ad": "Watch video and start",
+  "exam_limit_reached": "Today's free and video-unlocked exams are used up. Come back tomorrow, or get Premium for unlimited exams."
  },
  "ru": {
   "onb_welcome": "Добро пожаловать!",
@@ -224,7 +226,8 @@
   "ad_unavailable": "Реклама сейчас недоступна. Попробуй через минуту.",
   "exam_limit_title": "Бесплатный экзамен на сегодня использован",
   "exam_limit_text": "Один пробный экзамен в день — бесплатно. Посмотри короткое видео, чтобы начать ещё один, или возьми Premium — экзамены без ограничений.",
-  "exam_watch_ad": "Смотреть видео и начать"
+  "exam_watch_ad": "Смотреть видео и начать",
+  "exam_limit_reached": "Бесплатные экзамены и экзамены за видео на сегодня закончились. Возвращайся завтра или возьми Premium — экзамены без ограничений."
  },
  "uk": {
   "onb_welcome": "Ласкаво просимо!",
@@ -296,7 +299,8 @@
   "ad_unavailable": "Реклама зараз недоступна. Спробуй за хвилину.",
   "exam_limit_title": "Безкоштовний іспит на сьогодні використано",
   "exam_limit_text": "Один пробний іспит на день — безкоштовно. Переглянь коротке відео, щоб почати ще один, або візьми Premium — іспити без обмежень.",
-  "exam_watch_ad": "Переглянути відео й почати"
+  "exam_watch_ad": "Переглянути відео й почати",
+  "exam_limit_reached": "Безкоштовні іспити та іспити за відео на сьогодні закінчилися. Повертайся завтра або візьми Premium — іспити без обмежень."
  },
  "tr": {
   "onb_welcome": "Hoş geldin!",
@@ -368,7 +372,8 @@
   "ad_unavailable": "Şu anda reklam yok. Lütfen biraz sonra tekrar dene.",
   "exam_limit_title": "Bugünkü ücretsiz sınav kullanıldı",
   "exam_limit_text": "Günde bir deneme sınavı ücretsizdir. Bir tane daha başlatmak için kısa bir video izle ya da sınırsız sınav için Premium'a geç.",
-  "exam_watch_ad": "Videoyu izle ve başla"
+  "exam_watch_ad": "Videoyu izle ve başla",
+  "exam_limit_reached": "Bugünkü ücretsiz ve videoyla açılan sınavlar bitti. Yarın tekrar gel ya da sınırsız sınav için Premium'a geç."
  },
  "ar": {
   "onb_welcome": "أهلاً بك!",
@@ -440,7 +445,8 @@
   "ad_unavailable": "لا يوجد إعلان متاح الآن. حاول مرة أخرى بعد قليل.",
   "exam_limit_title": "تم استخدام الاختبار المجاني لهذا اليوم",
   "exam_limit_text": "اختبار تجريبي واحد يوميًا مجاني. شاهد فيديو قصيرًا لبدء اختبار آخر، أو اشترك في Premium لاختبارات بلا حدود.",
-  "exam_watch_ad": "شاهد الفيديو وابدأ"
+  "exam_watch_ad": "شاهد الفيديو وابدأ",
+  "exam_limit_reached": "انتهت الاختبارات المجانية والاختبارات المفتوحة بالفيديو لهذا اليوم. عد غداً، أو اشترك في Premium لاختبارات بلا حدود."
  },
  "fr": {
   "onb_welcome": "Bienvenue !",
@@ -512,7 +518,8 @@
   "ad_unavailable": "Aucune publicité disponible pour le moment. Réessayez dans un instant.",
   "exam_limit_title": "L’examen gratuit du jour est utilisé",
   "exam_limit_text": "Un examen blanc par jour est gratuit. Regardez une courte vidéo pour en lancer un autre, ou passez à Premium pour des examens illimités.",
-  "exam_watch_ad": "Regarder la vidéo et commencer"
+  "exam_watch_ad": "Regarder la vidéo et commencer",
+  "exam_limit_reached": "Les examens gratuits et débloqués par vidéo sont épuisés pour aujourd’hui. Revenez demain, ou passez à Premium pour des examens illimités."
  },
  "pt": {
   "onb_welcome": "Bem-vindo!",
@@ -584,7 +591,8 @@
   "ad_unavailable": "Nenhum anúncio disponível de momento. Tente novamente daqui a pouco.",
   "exam_limit_title": "O exame gratuito de hoje já foi usado",
   "exam_limit_text": "Um exame simulado por dia é gratuito. Veja um vídeo curto para começar outro ou passe para o Premium para exames ilimitados.",
-  "exam_watch_ad": "Ver o vídeo e começar"
+  "exam_watch_ad": "Ver o vídeo e começar",
+  "exam_limit_reached": "Os exames gratuitos e desbloqueados por vídeo de hoje acabaram. Volte amanhã ou passe para o Premium para exames ilimitados."
  },
  "zh": {
   "onb_welcome": "欢迎！",
@@ -656,6 +664,7 @@
   "ad_unavailable": "暂时没有可用的广告，请稍后再试。",
   "exam_limit_title": "今天的免费考试已用完",
   "exam_limit_text": "每天可免费进行一次模拟考试。观看一段短视频即可再开始一次，或升级 Premium 享受不限次数的考试。",
-  "exam_watch_ad": "观看视频并开始"
+  "exam_watch_ad": "观看视频并开始",
+  "exam_limit_reached": "今天的免费考试和视频解锁考试已用完。明天再来，或升级 Premium 享受不限次数的考试。"
  }
 }

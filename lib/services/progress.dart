@@ -53,6 +53,10 @@ class AppState extends ChangeNotifier {
   /// Free users get this many practice exams per day; more cost a rewarded ad.
   static const freeExamsPerDay = 1;
 
+  /// At most this many extra exams per day can be unlocked with videos, so that
+  /// rewarded ads do not replace Premium in the week before the exam.
+  static const adExamsPerDay = 2;
+
   SharedPreferences? _p;
   List<Question> _all = const [];
   final Map<String, QState> _state = {};
@@ -118,6 +122,9 @@ class AppState extends ChangeNotifier {
 
   /// True when the next exam can start without a rewarded ad.
   bool get canStartExamFree => premium || examsStartedToday < freeExamsPerDay;
+
+  /// True when one more exam can still be unlocked today with a rewarded ad.
+  bool get canStartExamWithAd => examsStartedToday < freeExamsPerDay + adExamsPerDay;
 
   Future<void> markExamStarted() async {
     final n = examsStartedToday + 1;

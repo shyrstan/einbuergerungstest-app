@@ -13,7 +13,7 @@ import '../widgets/question_card.dart';
 import 'settings.dart';
 
 /// Starts a practice exam, honouring the daily allowance: free users get
-/// [AppState.freeExamsPerDay] exams a day, each further one costs a rewarded ad.
+/// [AppState.freeExamsPerDay] exams a day, up to [AppState.adExamsPerDay] more for a rewarded ad each.
 /// If no ad can be shown the exam starts anyway - ad supply must never block learning.
 Future<void> startExam(BuildContext context) async {
   final st = context.read<AppState>();
@@ -28,19 +28,24 @@ Future<void> startExam(BuildContext context) async {
     go();
     return;
   }
+  final withAd = st.canStartExamWithAd;
   final choice = await showDialog<String>(
     context: context,
     builder: (ctx) => AlertDialog(
       title: Text(s.t('exam_limit_title')),
-      content: Text(s.t('exam_limit_text')),
+      content: Text(s.t(withAd ? 'exam_limit_text' : 'exam_limit_reached')),
       actions: [
         TextButton(onPressed: () => Navigator.pop(ctx), child: Text(s.t('cancel'))),
-        TextButton(onPressed: () => Navigator.pop(ctx, 'premium'), child: Text(s.t('unlock_premium'))),
-        FilledButton.icon(
-          onPressed: () => Navigator.pop(ctx, 'ad'),
-          icon: const Icon(Icons.play_circle_outline),
-          label: Text(s.t('exam_watch_ad')),
-        ),
+        if (withAd)
+          TextButton(onPressed: () => Navigator.pop(ctx, 'premium'), child: Text(s.t('unlock_premium')))
+        else
+          FilledButton(onPressed: () => Navigator.pop(ctx, 'premium'), child: Text(s.t('unlock_premium'))),
+        if (withAd)
+          FilledButton.icon(
+            onPressed: () => Navigator.pop(ctx, 'ad'),
+            icon: const Icon(Icons.play_circle_outline),
+            label: Text(s.t('exam_watch_ad')),
+          ),
       ],
     ),
   );

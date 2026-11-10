@@ -47,7 +47,7 @@ class _PracticeScreenState extends State<PracticeScreen> {
     final ok = _selected == _q.correct;
     setState(() => _revealed = true);
     await st.recordAnswer(_q, ok);
-    if (st.answeredCount % 10 == 0) {
+    if (st.answeredCount % 20 == 0) {
       await AdService.instance.maybeShowInterstitial(premium: st.premium);
     }
   }

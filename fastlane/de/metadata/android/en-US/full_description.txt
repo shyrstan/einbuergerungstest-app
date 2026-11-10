@@ -18,7 +18,7 @@ LANGUAGES
 App interface and explanations: Deutsch, English, Türkçe, العربية, Русский, Українська.
 
 FREE AND PREMIUM
-All questions, the exam simulation and the German explanations are free (with ads). You can unlock explanations and translations in your language one at a time by watching a short video ad. Premium (one-time purchase, no subscription) removes all ads and unlocks every translation.
+All questions, explanations and translations in every language are free (with ads). One exam simulation per day is free; you can unlock up to two more by watching a short video ad. Premium (one-time purchase, no subscription): no ads and unlimited exam simulations.
 
 SOURCE AND DISCLAIMER
 The questions come from the "Gesamtfragenkatalog zum Test Leben in Deutschland und zum Einbürgerungstest" published by the German Federal Office for Migration and Refugees (BAMF): https://www.bamf.de/SharedDocs/Anlagen/DE/Integration/Einbuergerung/gesamtfragenkatalog-lebenindeutschland.html

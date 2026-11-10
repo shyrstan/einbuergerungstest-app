@@ -19,7 +19,7 @@ LANGUAGES
 App interface and explanations: Français, English, العربية, Türkçe, Русский, Українська, Português, 中文.
 
 FREE AND PREMIUM
-All questions, mock exams and the French explanations are free (with ads). You can unlock the translation and explanation in your language one question at a time by watching a short video ad. Premium (one-time purchase, no subscription) removes all ads and unlocks every translation.
+All questions, explanations and translations in every language are free (with ads). One mock exam per day is free; you can unlock up to two more by watching a short video ad. Premium (one-time purchase, no subscription): no ads and unlimited mock exams.
 
 SOURCE AND DISCLAIMER
 The knowledge questions come from the official lists published by the French Ministry of the Interior at formation-civique.interieur.gouv.fr (Etalab 2.0 open licence). The official lists do not include answers: the answers, explanations and situational questions were written carefully by us but are not legal advice.
