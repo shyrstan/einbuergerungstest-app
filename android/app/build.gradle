@@ -70,6 +70,5 @@ android {
 flutter { source "../.." }
 
 dependencies {
-    implementation "com.android.billingclient:billing:7.1.1"
     implementation "com.google.android.play:integrity:1.4.0"
 }
