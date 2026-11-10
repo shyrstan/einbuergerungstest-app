@@ -59,13 +59,22 @@ class SettingsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            // Segment names can be long ("Carte de résident (CR)", "Mecklenburg-Vorpommern"):
+            // as a trailing widget the dropdown squeezed the title to one letter per line.
+            // The dropdown now sits under the title and takes the full width.
             ListTile(
               leading: const Icon(Icons.map_outlined),
               title: Text(s.t('settings_land')),
-              trailing: DropdownButton<String>(
+              subtitle: DropdownButton<String>(
                 value: st.land,
+                isExpanded: true,
                 underline: const SizedBox.shrink(),
-                items: st.exam.segments.map((l) => DropdownMenuItem(value: l.code, child: Text(l.name(s)))).toList(),
+                items: st.exam.segments
+                    .map((l) => DropdownMenuItem(
+                          value: l.code,
+                          child: Text(l.name(s), overflow: TextOverflow.ellipsis),
+                        ))
+                    .toList(),
                 onChanged: (v) => v == null ? null : st.setLand(v),
               ),
             ),
